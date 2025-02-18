@@ -8,7 +8,7 @@
 
 	<PropertyGroup Label="Package info">
 		<PackageId>Ossum.CQRS</PackageId>
-		<PackageDescription>A .NET library providing a Result class to encapsulate operation outcomes with standardized status handling.</PackageDescription>
+		<PackageDescription>A .NET library extending MediatR to provide interfaces for implementing the CQRS pattern, including queries, commands, and events.</PackageDescription>
 		<Authors>Gabriel Abreu (@gaberabreu)</Authors>
 		<PackageProjectUrl>https://github.com/gaberabreu/ossum-dotnet-cqrs</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/gaberabreu/ossum-dotnet-cqrs</RepositoryUrl>
