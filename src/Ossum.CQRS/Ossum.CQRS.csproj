@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Package info">
+		<PackageId>Ossum.CQRS</PackageId>
+		<PackageDescription>A .NET library providing a Result class to encapsulate operation outcomes with standardized status handling.</PackageDescription>
+		<Authors>Gabriel Abreu (@gaberabreu)</Authors>
+		<PackageProjectUrl>https://github.com/gaberabreu/ossum-dotnet-cqrs</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/gaberabreu/ossum-dotnet-cqrs</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>Icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Version>$(Version)</Version>
+	</PropertyGroup>
+
+	<ItemGroup Label="Package files">
+		<None Include="..\..\docs\assets\Icon.png" Visible="false" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Visible="false" Pack="true" PackagePath="\" />
+		<None Include="..\..\LICENSE" Visible="false" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.11.0" />
+		<PackageReference Include="MediatR" Version="12.4.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
+	</ItemGroup>
+
+</Project>
