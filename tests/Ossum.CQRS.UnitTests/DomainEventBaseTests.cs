@@ -3,10 +3,10 @@
 public class DomainEventBaseTests
 {
     [Fact]
-    public void GivenValidProperties_WhenCreatingInstance_ThenValuesAreSetProperly()
+    public void GivenParameters_WhenInstantiating_ThenHasCorrectValues()
     {
         // Given & When
-        var domainEvent = new TestDomainEvent();
+        var domainEvent = new SampleDomainEvent();
 
         // Then
         Assert.NotEqual(DateTime.MinValue, domainEvent.DateOccurred);

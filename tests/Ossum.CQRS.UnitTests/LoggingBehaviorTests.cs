@@ -2,44 +2,43 @@
 
 public class LoggingBehaviorTests
 {
-    private readonly TestRequestFaker _testRequestFaker = new();
-    private readonly Mock<ILogger<Mediator>> _loggerMock = new();
-    private readonly Mock<RequestHandlerDelegate<int>> _nextMock = new();
-    private readonly LoggingBehavior<TestRequest, int> _behavior;
+    private readonly Mock<ILogger<Mediator>> _logger = new();
+    private readonly Mock<RequestHandlerDelegate<int>> _delegate = new();
+    private readonly LoggingBehavior<SampleRequest, int> _behavior;
 
     public LoggingBehaviorTests()
     {
-        _behavior = new LoggingBehavior<TestRequest, int>(_loggerMock.Object);
+        _behavior = new LoggingBehavior<SampleRequest, int>(_logger.Object);
     }
 
     [Fact]
-    public async Task GivenLoggingBehavior_WhenHandlingRequest_ThenLogsInformation()
+    public async Task GivenLoggingBehavior_WhenHandling_ThenLogsInformation()
     {
         // Given
-        var request = _testRequestFaker.Generate();
-        _nextMock.Setup(n => n()).ReturnsAsync(1);
+        var request = new SampleRequestFaker().Generate();
+        _delegate.Setup(n => n()).ReturnsAsync(1);
 
         // When
-        var response = await _behavior.Handle(request, _nextMock.Object, CancellationToken.None);
+        var response = await _behavior.Handle(request, _delegate.Object, CancellationToken.None);
 
         // Then
         Assert.Equal(1, response);
-        _nextMock.Verify(handler => handler(), Times.Once);
-        _loggerMock.VerifyLog(LogLevel.Information, "Handling TestRequest", Times.Once);
-        _loggerMock.VerifyLog(LogLevel.Information, "Handled TestRequest", Times.Once);
+        _delegate.Verify(handler => handler(), Times.Once);
+        _logger.VerifyLog(LogLevel.Information, $"Handling {nameof(SampleRequest)}", Times.Once);
+        _logger.VerifyLog(LogLevel.Information, $"Handled {nameof(SampleRequest)}", Times.Once);
     }
 
     [Fact]
-    public async Task GivenLoggingBehaviorWithException_WhenHandlingRequest_ThenLogsError()
+    public async Task GivenLoggingBehaviorWithException_WhenHandling_ThenLogsError()
     {
         // Given
-        var request = _testRequestFaker.Generate();
-        _nextMock.Setup(n => n()).ThrowsAsync(new Exception("Test Exception"));
+        var request = new SampleRequestFaker().Generate();
+        _delegate.Setup(n => n()).ThrowsAsync(new Exception("Test Exception"));
 
         // When & Then
-        await Assert.ThrowsAsync<Exception>(() => _behavior.Handle(request, _nextMock.Object, CancellationToken.None));
-        _nextMock.Verify(handler => handler(), Times.Once);
-        _loggerMock.VerifyLog(LogLevel.Information, "Handling TestRequest", Times.Once);
-        _loggerMock.VerifyLog(LogLevel.Error, "Error while handling TestRequest", Times.Once);
+        await Assert.ThrowsAsync<Exception>(() => _behavior.Handle(request, _delegate.Object, CancellationToken.None));
+        _delegate.Verify(handler => handler(), Times.Once);
+        _logger.VerifyLog(LogLevel.Information, $"Handling {nameof(SampleRequest)}", Times.Once);
+        _logger.VerifyLog(LogLevel.Error, $"Error while handling {nameof(SampleRequest)}", Times.Once);
     }
 }
